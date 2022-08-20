@@ -1,14 +1,10 @@
 class CharacterDTO {
-  int id;
   String name;
-  String species;
   String image;
-  String status;
 
   CharacterDTO.fromJson(Map<dynamic, dynamic> json)
-      : id = json['id'],
-        name = json['name'],
-        species = json['species'],
-        status = json['status'],
-        image = json['image'];
+      : name = json['name'],
+        image = (json['sprites'] == null)
+            ? "https://plantillasdememes.com/img/plantillas/imagen-no-disponible01601774755.jpg"
+            : json['sprites']['back_default'];
 }

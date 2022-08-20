@@ -11,7 +11,7 @@ class MyHome extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Rick & Morty APP"),
+        title: const Text("Pokedex APP"),
       ),
       drawer: const DrawerApp(),
       body: SizedBox(

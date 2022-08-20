@@ -7,17 +7,23 @@ class HomeController {
   final homeApiRepository = HomeApiRepository();
 
   Future<List<CharacterDTO>> getCharacters() async {
-    final Response response = await homeApiRepository.getCharacters();
+    Response response = await homeApiRepository.getCharacters();
     List<CharacterDTO> characters = [];
 
     final bool validateStatusCode = response.statusCode == 200;
     if (validateStatusCode) {
-      final Map dataFromAPI = jsonDecode(response.body);
+      Map dataFromAPI = jsonDecode(response.body);
       final List<dynamic> charactersResults = dataFromAPI["results"];
 
-      characters = charactersResults
-          .map((character) => CharacterDTO.fromJson(character))
-          .toList();
+      for (var element in charactersResults) {
+        response = await homeApiRepository.getCharactersByName(element["name"]);
+        dataFromAPI = jsonDecode(response.body);
+        characters.add(CharacterDTO.fromJson(dataFromAPI));
+      }
+
+      characters = charactersResults.map((character) {
+        return CharacterDTO.fromJson(character);
+      }).toList();
     }
     return characters;
   }
